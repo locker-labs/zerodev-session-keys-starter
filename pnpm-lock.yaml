@@ -11,6 +11,15 @@ dependencies:
   '@web3modal/wagmi':
     specifier: ^5.1.11
     version: 5.1.11(@types/react@19.0.2)(@wagmi/connectors@5.7.3)(@wagmi/core@2.16.3)(react-dom@19.0.0)(react@19.0.0)(viem@2.21.57)(wagmi@2.14.6)
+  '@zerodev/ecdsa-validator':
+    specifier: ^5.4.1
+    version: 5.4.1(@zerodev/sdk@5.4.9)(viem@2.21.57)
+  '@zerodev/permissions':
+    specifier: ^5.5.0
+    version: 5.5.0(@zerodev/sdk@5.4.9)(@zerodev/webauthn-key@5.4.0)(viem@2.21.57)
+  '@zerodev/sdk':
+    specifier: ^5.4.9
+    version: 5.4.9(viem@2.21.57)
   next:
     specifier: 15.1.3
     version: 15.1.3(react-dom@19.0.0)(react@19.0.0)
@@ -32,7 +41,7 @@ devDependencies:
     specifier: ^3
     version: 3.2.0
   '@types/node':
-    specifier: ^20
+    specifier: ^20.17.10
     version: 20.17.10
   '@types/react':
     specifier: ^19
@@ -52,6 +61,9 @@ devDependencies:
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.17
+  tslib:
+    specifier: ^2.8.1
+    version: 2.8.1
   typescript:
     specifier: ^5
     version: 5.7.2
@@ -976,6 +988,27 @@ packages:
     dependencies:
       '@noble/hashes': 1.6.1
       '@scure/base': 1.2.1
+    dev: false
+
+  /@simplewebauthn/browser@8.3.7:
+    resolution: {integrity: sha512-ZtRf+pUEgOCvjrYsbMsJfiHOdKcrSZt2zrAnIIpfmA06r0FxBovFYq0rJ171soZbe13KmWzAoLKjSxVW7KxCdQ==}
+    dependencies:
+      '@simplewebauthn/typescript-types': 8.3.4
+    dev: false
+
+  /@simplewebauthn/browser@9.0.1:
+    resolution: {integrity: sha512-wD2WpbkaEP4170s13/HUxPcAV5y4ZXaKo1TfNklS5zDefPinIgXOpgz1kpEvobAsaLPa2KeH7AKKX/od1mrBJw==}
+    dependencies:
+      '@simplewebauthn/types': 9.0.1
+    dev: false
+
+  /@simplewebauthn/types@9.0.1:
+    resolution: {integrity: sha512-tGSRP1QvsAvsJmnOlRQyw/mvK9gnPtjEc5fg2+m8n+QUa+D7rvrKkOYyfpy42GTs90X3RDOnqJgfHt+qO67/+w==}
+    dev: false
+
+  /@simplewebauthn/typescript-types@8.3.4:
+    resolution: {integrity: sha512-38xtca0OqfRVNloKBrFB5LEM6PN5vzFbJG6rAutPVrtGHFYxPdiV3btYWq0eAZAZmP+dqFPYJxJWeJrGfmYHng==}
+    deprecated: This package has been renamed to @simplewebauthn/types. Please install @simplewebauthn/types instead to ensure you receive future updates.
     dev: false
 
   /@socket.io/component-emitter@3.1.2:
@@ -2227,6 +2260,49 @@ packages:
       zod: 3.22.4
     dev: false
 
+  /@zerodev/ecdsa-validator@5.4.1(@zerodev/sdk@5.4.9)(viem@2.21.57):
+    resolution: {integrity: sha512-tIf4PO6xVbxTG2wgHcKQGrMa/q8ldi1d7PbpElugXSzzVhUSaKNMxtpzHeAY+zYV7uFpzFYkqHcNs0aD1lvJ+Q==}
+    peerDependencies:
+      '@zerodev/sdk': ^5.4.0
+      viem: ^2.21.40
+    dependencies:
+      '@zerodev/sdk': 5.4.9(viem@2.21.57)
+      viem: 2.21.57(typescript@5.7.2)
+    dev: false
+
+  /@zerodev/permissions@5.5.0(@zerodev/sdk@5.4.9)(@zerodev/webauthn-key@5.4.0)(viem@2.21.57):
+    resolution: {integrity: sha512-iGZkTcb+fy+eTqrreR66uiMs1xP9t9ulASgUEL6q8eAVKKJLN1ofeWkzESBXYpinAHXsK/vLmb+Nsv80Y3z+dg==}
+    peerDependencies:
+      '@zerodev/sdk': ^5.4.0
+      '@zerodev/webauthn-key': ^5.4.0
+      viem: ^2.21.40
+    dependencies:
+      '@simplewebauthn/browser': 9.0.1
+      '@zerodev/sdk': 5.4.9(viem@2.21.57)
+      '@zerodev/webauthn-key': 5.4.0(viem@2.21.57)
+      merkletreejs: 0.3.11
+      viem: 2.21.57(typescript@5.7.2)
+    dev: false
+
+  /@zerodev/sdk@5.4.9(viem@2.21.57):
+    resolution: {integrity: sha512-vFDj6bdwc7TGsDB2pHlHJTArfItaZxT+d6IJTj0lFWeURxVO3jXn2DSY3/3Lhvb226TZ4gxSX8qH2m1ApHiC6A==}
+    peerDependencies:
+      viem: ^2.21.40
+    dependencies:
+      semver: 7.6.3
+      viem: 2.21.57(typescript@5.7.2)
+    dev: false
+
+  /@zerodev/webauthn-key@5.4.0(viem@2.21.57):
+    resolution: {integrity: sha512-RuULPDiV8R+7P1ZuCWKY4UvZbcq8MXflPKjClnZHu9E1GohGH96B6g6D4e/hhOlcVytS32mZnfvOI2rqaTn/1Q==}
+    peerDependencies:
+      viem: ^2.21.40
+    dependencies:
+      '@noble/curves': 1.7.0
+      '@simplewebauthn/browser': 8.3.7
+      viem: 2.21.57(typescript@5.7.2)
+    dev: false
+
   /abitype@1.0.7(typescript@5.7.2):
     resolution: {integrity: sha512-ZfYYSktDQUwc2eduYu8C4wOs+RDPmnRYMh7zNfzeMtGGgb0U+6tLGjixUic6mXf5xKKCcgT5Qp6cv39tOARVFw==}
     peerDependencies:
@@ -2457,6 +2533,10 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
+  /bn.js@4.11.6:
+    resolution: {integrity: sha512-XWwnNNFCuuSQ0m3r3C4LE3EiORltHd9M05pq6FOlVeiophzRbMo50Sbz1ehl8K3Z+jw9+vmgnXefY1hz8X+2wA==}
+    dev: false
+
   /bn.js@4.12.1:
     resolution: {integrity: sha512-k8TVBiPkPJT9uHLdOKfFpqcfprwBFOAAXXozRubr7R7PfIuKvQlzcI4M0pALeqXN09vdaMbUdUj+pass+uULAg==}
     dev: false
@@ -2517,6 +2597,10 @@ packages:
       base-x: 4.0.0
     dev: false
     optional: true
+
+  /buffer-reverse@1.0.1:
+    resolution: {integrity: sha512-M87YIUBsZ6N924W57vDwT/aOu8hw7ZgdByz6ijksLjmHJELBASmYTTlNHRgjE+pTsT9oJXGaDSgqqwfdHotDUg==}
+    dev: false
 
   /buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
@@ -2706,6 +2790,10 @@ packages:
     resolution: {integrity: sha512-HsZgeVYaG+b5zA+9PbIPGq4+J/CJynJuearykPsXx4V/eMhyQ5EDVg3Ak2FBZtVXCiOLu/U7IiwDHTr9MA+IKw==}
     dependencies:
       uncrypto: 0.1.3
+    dev: false
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /cssesc@3.0.0:
@@ -3394,6 +3482,12 @@ packages:
       fast-safe-stringify: 2.1.1
     dev: false
 
+  /ethereum-bloom-filters@1.2.0:
+    resolution: {integrity: sha512-28hyiE7HVsWubqhpVLVmZXFd4ITeHi+BUu05o9isf0GUpMtzBUi+8/gFrGaGYzvGAJQmJ3JKj77Mk9G98T84rA==}
+    dependencies:
+      '@noble/hashes': 1.6.1
+    dev: false
+
   /ethereum-cryptography@2.2.1:
     resolution: {integrity: sha512-r/W8lkHSiTLxUxW8Rf3u4HGB0xQweG2RyETjywylKZSzLWoWAijRz8WCuOtJ6wah+avllXBqZuk29HCCvhEIRg==}
     dependencies:
@@ -3401,6 +3495,14 @@ packages:
       '@noble/hashes': 1.4.0
       '@scure/bip32': 1.4.0
       '@scure/bip39': 1.3.0
+    dev: false
+
+  /ethjs-unit@0.1.6:
+    resolution: {integrity: sha512-/Sn9Y0oKl0uqQuvgFk/zQgR7aw1g36qX/jzSQ5lSwlO0GigPymk4eGQfeNTD03w1dPOqfz8V77Cy43jH56pagw==}
+    engines: {node: '>=6.5.0', npm: '>=3'}
+    dependencies:
+      bn.js: 4.11.6
+      number-to-bn: 1.7.0
     dev: false
 
   /eventemitter2@6.4.9:
@@ -3869,6 +3971,11 @@ packages:
     dependencies:
       is-extglob: 2.1.1
 
+  /is-hex-prefixed@1.0.0:
+    resolution: {integrity: sha512-WvtOiug1VFrE9v1Cydwm+FnXd3+w9GaeVUss5W4v/SLy3UW00vP+6iNF2SdnfiBoLy4bTqVdkftNGTUeOFVsbA==}
+    engines: {node: '>=6.5.0', npm: '>=3'}
+    dev: false
+
   /is-map@2.0.3:
     resolution: {integrity: sha512-1Qed0/Hr2m+YqxnM09CjA2d/i6YZNfF6R2oRAOj36eUdS6qIV/huPJNSEpKbupewFs+ZsJlxsjjPbc0/afW6Lw==}
     engines: {node: '>= 0.4'}
@@ -4186,6 +4293,17 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
+  /merkletreejs@0.3.11:
+    resolution: {integrity: sha512-LJKTl4iVNTndhL+3Uz/tfkjD0klIWsHlUzgtuNnNrsf7bAlXR30m+xYB7lHr5Z/l6e/yAIsr26Dabx6Buo4VGQ==}
+    engines: {node: '>= 7.6.0'}
+    dependencies:
+      bignumber.js: 9.1.2
+      buffer-reverse: 1.0.1
+      crypto-js: 4.2.0
+      treeify: 1.1.0
+      web3-utils: 1.10.4
+    dev: false
+
   /micro-ftch@0.3.1:
     resolution: {integrity: sha512-/0LLxhzP0tfiR5hcQebtudP56gUurs2CLkGarnCiB/OqEyUFQ6U3paQi/tgLv0hBJYt2rnr9MNpxz4fiiugstg==}
     dev: false
@@ -4353,6 +4471,14 @@ packages:
   /normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  /number-to-bn@1.7.0:
+    resolution: {integrity: sha512-wsJ9gfSz1/s4ZsJN01lyonwuxA1tml6X1yBDnfpMglypcBRFZZkus26EdPSlqS5GJfYddVZa22p3VNb3z5m5Ig==}
+    engines: {node: '>=6.5.0', npm: '>=3'}
+    dependencies:
+      bn.js: 4.11.6
+      strip-hex-prefix: 1.0.0
+    dev: false
 
   /obj-multiplex@1.0.0:
     resolution: {integrity: sha512-0GNJAOsHoBHeNTvl5Vt6IWnpUEcc3uSRxzBri7EDyIcMgYvnY2JL2qdeV5zTMjWQX5OHcD5amcW2HFfDh0gjIA==}
@@ -4775,6 +4901,12 @@ packages:
 
   /radix3@1.1.2:
     resolution: {integrity: sha512-b484I/7b8rDEdSDKckSSBA8knMpcdsXudlE/LNL639wFoHKwLbEkQFZHWEYwDC0wa0FKUcCY+GAF73Z7wxNVFA==}
+    dev: false
+
+  /randombytes@2.1.0:
+    resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
+    dependencies:
+      safe-buffer: 5.2.1
     dev: false
 
   /react-dom@19.0.0(react@19.0.0):
@@ -5261,6 +5393,13 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /strip-hex-prefix@1.0.0:
+    resolution: {integrity: sha512-q8d4ue7JGEiVcypji1bALTos+0pWtyGlivAWyPuTkHzuTCJqrK9sWxYQZUq6Nq3cuyv3bm734IhHvHtGGURU6A==}
+    engines: {node: '>=6.5.0', npm: '>=3'}
+    dependencies:
+      is-hex-prefixed: 1.0.0
+    dev: false
+
   /strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
@@ -5385,6 +5524,11 @@ packages:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: false
 
+  /treeify@1.1.0:
+    resolution: {integrity: sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==}
+    engines: {node: '>=0.6'}
+    dev: false
+
   /ts-api-utils@1.4.3(typescript@5.7.2):
     resolution: {integrity: sha512-i3eMG77UTMD0hZhgRS562pv83RC6ukSAC2GMNWc+9dieh/+jDM5u5YG+NHX6VNDRHQcHwmsTHctP9LhbC3WxVw==}
     engines: {node: '>=16'}
@@ -5413,7 +5557,6 @@ packages:
 
   /tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -5602,6 +5745,10 @@ packages:
       node-gyp-build: 4.8.4
     dev: false
 
+  /utf8@3.0.0:
+    resolution: {integrity: sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ==}
+    dev: false
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -5712,6 +5859,20 @@ packages:
       - uploadthing
       - utf-8-validate
       - zod
+    dev: false
+
+  /web3-utils@1.10.4:
+    resolution: {integrity: sha512-tsu8FiKJLk2PzhDl9fXbGUWTkkVXYhtTA+SmEFkKft+9BgwLxfCRpU96sWv7ICC8zixBNd3JURVoiR3dUXgP8A==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      '@ethereumjs/util': 8.1.0
+      bn.js: 5.2.1
+      ethereum-bloom-filters: 1.2.0
+      ethereum-cryptography: 2.2.1
+      ethjs-unit: 0.1.6
+      number-to-bn: 1.7.0
+      randombytes: 2.1.0
+      utf8: 3.0.0
     dev: false
 
   /webauthn-p256@0.0.10:
