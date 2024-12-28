@@ -14,7 +14,6 @@ export const getTransferPolicy = (toAddress: `0x${string}`) =>
     policyVersion: CallPolicyVersion.V0_0_2,
     permissions: [
       {
-        // zeroAddress is not working
         // Using zeroAddress means this policy applies to all ERC-20 tokens
         target: zeroAddress,
 

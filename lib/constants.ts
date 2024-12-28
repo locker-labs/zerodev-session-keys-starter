@@ -1,6 +1,5 @@
 import { sepolia } from "viem/chains";
 
-export const FORWARDING_FRACTION = 0.2;
 export const CHAIN = sepolia;
 export const BUNDLER_URL = process.env.NEXT_PUBLIC_BUNDLER_URL;
 if (!BUNDLER_URL) throw new Error("NEXT_PUBLIC_BUNDLER_URL is not set");

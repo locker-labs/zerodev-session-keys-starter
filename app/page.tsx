@@ -1,7 +1,7 @@
 "use client";
 
 import useZeroDev from "@/hooks/useZeroDev";
-import { CHAIN, FORWARDING_FRACTION, PASSKEY_AUTHORIZED_ADDRESS, TOKEN_ADDRESS, TOKEN_DECIMALS } from "@/lib/constants";
+import { PASSKEY_AUTHORIZED_ADDRESS, TOKEN_ADDRESS, TOKEN_DECIMALS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
 
@@ -29,7 +29,7 @@ export default function Home() {
 
   const handleSignSessionKey = async () => {
     try {
-      const key = await signSessionKey();
+      const key = await signSessionKey({authorizedAddress: PASSKEY_AUTHORIZED_ADDRESS});
       if (key) {
         setSessionKey(key);
       }
@@ -38,16 +38,15 @@ export default function Home() {
     }
   };
 
+  const amountOut = Boolean(withdrawAmount) ? BigInt(Math.floor(Number(withdrawAmount) * 10 ** Number(TOKEN_DECIMALS))) : BigInt(0);
   const handleWithdrawAsOwner = () => {
-    console.log("Withdraw as owner:", withdrawAmount);
+    console.log("Withdraw as owner:", amountOut);
     console.log("Going to send tokens");
     try {
       const hash = sendUserOp(
-        0,
-        CHAIN.id,
-      PASSKEY_AUTHORIZED_ADDRESS,
-      TOKEN_ADDRESS,
-        BigInt(Math.floor(Number(withdrawAmount) * 10 ** Number(TOKEN_DECIMALS)))
+        PASSKEY_AUTHORIZED_ADDRESS,
+        TOKEN_ADDRESS,
+        amountOut
       );
       console.log(`Sent tokens ${hash}`);
     } catch (error) {
@@ -56,7 +55,16 @@ export default function Home() {
   };
 
   const handleWithdrawWithKey = () => {
-    console.log("Withdraw with session key:", withdrawAmount);
+    console.log("Withdraw with session key:", amountOut);
+    fetch("/api/send-erc20", {
+      method: "POST",
+      body: JSON.stringify({
+        amount: amountOut.toString(),
+        tokenAddress: TOKEN_ADDRESS,
+        sessionKey,
+        toAddress: PASSKEY_AUTHORIZED_ADDRESS,
+      }),
+    });
   };
 
   if (!address) {
@@ -113,7 +121,6 @@ export default function Home() {
         <div className="flex flex-col items-center gap-2">
           <p className="text-center max-w-md">
             By signing the session key, you authorize the forwarding of funds to the designated address.
-            This permission is limited to {FORWARDING_FRACTION * 100}% of incoming funds.
           </p>
           <button
             onClick={handleSignSessionKey}

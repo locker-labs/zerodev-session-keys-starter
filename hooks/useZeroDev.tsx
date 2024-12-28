@@ -1,4 +1,5 @@
 "use client";
+import { toSudoPolicy } from "@zerodev/permissions/policies";
 
 import {
 	getKernelAddressFromECDSA,
@@ -33,23 +34,17 @@ import { PASSKEY_AUTHORIZED_ADDRESS, CHAIN, BUNDLER_URL, PAYMASTER_URL, ZERODEV_
 
 const entryPoint = getEntryPoint("0.7");
 
-const RECIPIENT_ADDRESS = process.env.NEXT_PUBLIC_RECIPIENT_ADDRESS as `0x${string}`;
-if (!RECIPIENT_ADDRESS) {
-	throw new Error("NEXT_PUBLIC_RECIPIENT_ADDRESS is not set");
-}
-
 const useZeroDev = () => {
 	const publicClient = usePublicClient();
-	console.log("!publicClient", publicClient);
+	// console.log("!publicClient", publicClient);
 	const { data: walletClient } = useWalletClient();
 
 	// ************************************************************* //
 	// Prompts user to sign session key for current chain
 	// ************************************************************* //
-	const signSessionKey = async (): Promise<string | undefined> => {
+	const signSessionKey = async ({authorizedAddress}: {authorizedAddress: `0x${string}`}): Promise<string | undefined> => {
 		console.log(
 			"signSessionKey",
- 
 		);
 		if (!walletClient) {
 			throw new Error("Wallet client is not available");
@@ -68,23 +63,19 @@ const useZeroDev = () => {
 		);
 
 		const emptyAccount = addressToEmptyAccount(
-			PASSKEY_AUTHORIZED_ADDRESS
+			authorizedAddress
 		);
 
 		const emptySessionKeySigner = await toECDSASigner({
 			signer: emptyAccount,
 		});
 
-		// Policies to allow Locker agent to send money to user's hot wallet
-		const combinedPolicy = getTransferPolicy(RECIPIENT_ADDRESS)
-
-		// Type guard to filter out undefined values
-		function isDefined<T>(value: T | undefined): value is T {
-			return value !== undefined;
-		}
+		// Policies to allow authorized address to send erc20 to authorized address
+		const combinedPolicy = getTransferPolicy(authorizedAddress)
 
 		// Filter out undefined policies
-		const policies = [combinedPolicy].filter(isDefined);
+		// const policies = [combinedPolicy];
+		const policies = [toSudoPolicy({})]
 
 		const permissionPlugin = await toPermissionValidator(
 			publicClient as PublicClient,
@@ -142,8 +133,6 @@ const useZeroDev = () => {
 	// Constructs and submits userOp to send money out of locker
 	// ************************************************************* //
 	const sendUserOp = async (
-		lockerIndex: number,
-		chainId: number,
 		recipient: `0x${string}`,
 		token: `0x${string}`,
 		amount: bigint
@@ -276,6 +265,8 @@ const useZeroDev = () => {
 			entryPoint,
 		});
 	// ************************************************************* //
+
+
 
 	return {
 		genSmartAccountAddress,
