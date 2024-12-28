@@ -40,7 +40,7 @@ if (!RECIPIENT_ADDRESS) {
 
 const useZeroDev = () => {
 	const publicClient = usePublicClient();
-	// console.log("!publicClient", publicClient);
+	console.log("!publicClient", publicClient);
 	const { data: walletClient } = useWalletClient();
 
 	// ************************************************************* //
