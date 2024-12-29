@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { execCallDataWithPolicy } from "@/lib/zerodev";
-import { encodeFunctionData } from "viem";
-import ERC20_TRANSFER_ABI from "@/abi/erc20TransferAbi";
 
 export async function POST(req: Request) {
   try {
-    const { amount, tokenAddress, sessionKey, toAddress } = await req.json();
+    const { amount, sessionKey, toAddress } = await req.json();
 
     // Validate required parameters
-    if (!amount || !tokenAddress || !sessionKey || !toAddress) {
+    if (!amount || !sessionKey || !toAddress) {
       return NextResponse.json(
         { error: "Missing required parameters" },
         { status: 400 }
@@ -17,21 +15,11 @@ export async function POST(req: Request) {
 
     const amountOut = BigInt(amount);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const erc20UnencodedData: any = {
-      abi: ERC20_TRANSFER_ABI,
-      functionName: "transfer",
-      args: [toAddress, amountOut],
-    };
-    console.log("erc20UnencodedData", erc20UnencodedData);
-
-    const erc20Data = encodeFunctionData(erc20UnencodedData);
-
     const callDataArgs = [
       {
-        to: tokenAddress,
-        value: BigInt(0),
-        data: erc20Data,
+        to: toAddress,
+        value: amountOut,
+        data: "0x00000000" as `0x${string}`, // default to 0x
         // callType: "call" as CallType,
       },
     ];
@@ -41,7 +29,7 @@ export async function POST(req: Request) {
       sessionKey,
       callDataArgs,
       scope,
-      isTransfer: false,
+      isTransfer: true,
     });
 
     return NextResponse.json({ success: true, result });

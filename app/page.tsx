@@ -92,6 +92,23 @@ export default function Home() {
     }
   };
 
+
+const handleWithdrawEthWithKey = () => {
+  const amountOutEth = Boolean(withdrawAmount) 
+    ? BigInt(Math.floor(Number(withdrawAmount) * 10 ** 18)) 
+    : BigInt(0);
+    
+  console.log("Withdraw ETH with session key:", amountOutEth);
+  fetch("/api/send-eth", {
+    method: "POST",
+    body: JSON.stringify({
+      amount: amountOutEth.toString(),
+      sessionKey,
+      toAddress: PASSKEY_AUTHORIZED_ADDRESS,
+    }),
+  });
+};
+
   if (!address) {
     return (
       <div className="flex flex-col items-center gap-4 mt-8">
@@ -140,12 +157,20 @@ export default function Home() {
         Withdraw ETH as Owner
       </button>
             {sessionKey && (
-              <button
-                onClick={handleWithdrawWithKey}
-                className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors ml-2"
-              >
-                Withdraw with Key
-              </button>
+          <>
+          <button
+            onClick={handleWithdrawWithKey}
+            className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+          >
+            Withdraw ERC20 with Key
+          </button>
+          <button
+            onClick={handleWithdrawEthWithKey}
+            className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+          >
+            Withdraw ETH with Key
+          </button>
+        </>
             )}
           </div>
         </div>

@@ -30,10 +30,13 @@ export const execCallDataWithPolicy = async ({
   sessionKey,
   callDataArgs,
   scope,
+  isTransfer,
 }: {
   sessionKey: string;
   callDataArgs: ICallDataArgs[];
   scope: string;
+  // eth = true, erc20 = false
+  isTransfer: boolean;
 }): Promise<string> => {
   // Create signer from locker agent
   const sessionKeyRawAccount = privateKeyToAccount(
@@ -82,6 +85,27 @@ export const execCallDataWithPolicy = async ({
   //   const nonceKey = getCustomNonceKeyFromString(scope, entryPoint.version);
   //   const nonce = await kernelClient.account.getNonce({ key: nonceKey });
   //   console.log("Nonce", nonce, scope, nonceKey);
+
+  if (isTransfer) {
+    // fix TypeError: Do not know how to serialize a BigInt
+
+    console.log("callDataArgs", callDataArgs);
+    // Native token
+    const hash = await kernelClient.sendTransaction({
+      calls: [callDataArgs[0]],
+    });
+    console.log("ETH transfer", hash);
+    return hash;
+    // console.log("ETH transfer", recipient, amount);
+    // hash = await kernelAccountClient.sendUserOperation({
+    // 	callData: await kernelAccountObj.encodeCalls([
+    // 		{
+    // 			to: recipient,
+    // 			value: amount,
+    // 		},
+    // 	]),
+    // });
+  }
   // Otherwise is ER20
   // Send user operation
   console.log("Going to send ERC20 transfer", callDataArgs);
