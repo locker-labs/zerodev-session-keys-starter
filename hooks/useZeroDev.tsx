@@ -230,6 +230,7 @@ const useZeroDev = () => {
 				});
 			}
 
+			console.log("hash", hash);
 			return hash;
 		} catch (error) {
 			const acceptableErrorMessages = [

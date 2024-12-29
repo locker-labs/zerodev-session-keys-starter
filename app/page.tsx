@@ -3,6 +3,7 @@
 import useZeroDev from "@/hooks/useZeroDev";
 import { PASSKEY_AUTHORIZED_ADDRESS, TOKEN_ADDRESS, TOKEN_DECIMALS } from "@/lib/constants";
 import { useEffect, useState } from "react";
+import { zeroAddress } from "viem";
 import { useAccount, useBalance } from "wagmi";
 
 export default function Home() {
@@ -17,6 +18,12 @@ export default function Home() {
     token: TOKEN_ADDRESS,
     query: { refetchInterval: 5_000 },
   });
+
+    // Add ETH balance hook
+    const { data: ethBalance } = useBalance({
+      address: kernelAddress as `0x${string}`,
+      query: { refetchInterval: 5_000 },
+    });
 
   useEffect(() => {
     const getKernelAddress = async () => {
@@ -67,6 +74,24 @@ export default function Home() {
     });
   };
 
+  const handleWithdrawEthAsOwner = () => {
+    const amountOutEth = Boolean(withdrawAmount) 
+      ? BigInt(Math.floor(Number(withdrawAmount) * 10 ** 18)) 
+      : BigInt(0);
+    
+    console.log("Withdraw ETH as owner:", amountOutEth);
+    try {
+      const hash = sendUserOp(
+        PASSKEY_AUTHORIZED_ADDRESS,
+        zeroAddress,
+        amountOutEth
+      );
+      console.log(`Sent ETH ${hash}`);
+    } catch (error) {
+      console.error("Error sending ETH:", error);
+    }
+  };
+
   if (!address) {
     return (
       <div className="flex flex-col items-center gap-4 mt-8">
@@ -91,6 +116,9 @@ export default function Home() {
           <p className="text-lg">
             Token Balance: {tokenBalance?.formatted || "0"} {tokenBalance?.symbol}
           </p>
+          <p className="text-lg">
+              ETH Balance: {ethBalance?.formatted || "0"} ETH
+            </p>
           <div className="mt-4">
             <input
               type="number"
@@ -103,8 +131,14 @@ export default function Home() {
               onClick={handleWithdrawAsOwner}
               className="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors"
             >
-              Withdraw as Owner
+              Withdraw ERC20 as Owner
             </button>
+            <button
+        onClick={handleWithdrawEthAsOwner}
+        className="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors ml-2"
+      >
+        Withdraw ETH as Owner
+      </button>
             {sessionKey && (
               <button
                 onClick={handleWithdrawWithKey}
