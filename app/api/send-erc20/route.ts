@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { execCallDataWithPolicy } from "@/lib/zerodev";
 import { encodeFunctionData } from "viem";
 import ERC20_TRANSFER_ABI from "@/abi/erc20TransferAbi";
-import { CallType } from "@zerodev/sdk/types";
 
 export async function POST(req: Request) {
   try {

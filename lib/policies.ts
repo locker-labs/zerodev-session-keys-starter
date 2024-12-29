@@ -11,7 +11,7 @@ import { erc20Abi, zeroAddress } from "viem";
  */
 export const getTransferPolicy = (toAddress: `0x${string}`) =>
   toCallPolicy({
-    policyVersion: CallPolicyVersion.V0_0_2,
+    policyVersion: CallPolicyVersion.V0_0_4,
     permissions: [
       {
         // Using zeroAddress means this policy applies to all ERC-20 tokens

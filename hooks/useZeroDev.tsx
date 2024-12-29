@@ -30,7 +30,7 @@ import {
 import { usePublicClient, useWalletClient } from "wagmi";
 
 import { getTransferPolicy } from "@/lib/policies";
-import { PASSKEY_AUTHORIZED_ADDRESS, CHAIN, BUNDLER_URL, PAYMASTER_URL, ZERODEV_SEED } from "@/lib/constants";
+import { CHAIN, BUNDLER_URL, PAYMASTER_URL, ZERODEV_SEED } from "@/lib/constants";
 
 const entryPoint = getEntryPoint("0.7");
 
@@ -73,9 +73,10 @@ const useZeroDev = () => {
 		// Policies to allow authorized address to send erc20 to authorized address
 		const combinedPolicy = getTransferPolicy(authorizedAddress)
 
-		// Filter out undefined policies
-		// const policies = [combinedPolicy];
-		const policies = [toSudoPolicy({})]
+		// THI FAILS
+		const policies = [combinedPolicy];
+		// THIS WORKS
+		// const policies = [toSudoPolicy({})]
 
 		const permissionPlugin = await toPermissionValidator(
 			publicClient as PublicClient,
